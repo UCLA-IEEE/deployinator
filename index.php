@@ -2,13 +2,19 @@
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 $requestURI = $_SERVER["REQUEST_URI"];
+print(shell_exec("python main.py"));
+
+$repoToDir = array(
+    "ieeebruins.com" => "ieeebruins-production",
+    "deployinator" => "deployinator",
+);
 
 /**
  * POST /deploy is the deploy webhook that runs git pull in
  * local repositories
  */
 if ($requestMethod === "POST" && $requestURI === "/deploy") {
-    chdir("../echo");
+    chdir("../" . $repoToDir["deployinator"]);
     print(shell_exec("git pull"));
 }
 
