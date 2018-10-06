@@ -11,8 +11,6 @@ $repoToDir = array(
 // Get request body and decode it into an object
 $json_str = file_get_contents('php://input');
 $reqBody = json_decode($json_str);
-print_r($reqBody);
-print($reqBody->repository->name);
 
 /**
  * POST /deploy is the deploy webhook that runs git pull in
@@ -20,7 +18,6 @@ print($reqBody->repository->name);
  */
 if ($requestMethod === "POST" && $requestURI === "/deploy") {
     $repoName = $reqBody->repository->name;
-    print($repoName);
     chdir("../" . $repoToDir[$repoName]);
     print(shell_exec("git pull"));
 }
