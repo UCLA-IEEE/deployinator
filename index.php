@@ -1,31 +1,27 @@
 <?php
 
-$requestMethod = $_SERVER["REQUEST_METHOD"];
-$requestURI = $_SERVER["REQUEST_URI"];
+define('ROOT', '.' . DIRECTORY_SEPARATOR);
+define('APP', ROOT . 'app' . DIRECTORY_SEPARATOR);
+define('VIEWS', ROOT . 'views' . DIRECTORY_SEPARATOR);
+define('CORE', APP . 'core' . DIRECTORY_SEPARATOR);
+define('CONTROLLERS', APP . 'controllers' . DIRECTORY_SEPARATOR);
+define('MODELS', APP . 'models' . DIRECTORY_SEPARATOR);
 
-$repoToDir = array(
-    "ieeebruins.com" => "ieeebruins-production",
-    "deployinator" => "deployinator",
-);
-
-// Get request body and decode it into an object
-$json_str = file_get_contents('php://input');
-$reqBody = json_decode($json_str);
+require_once ROOT . 'App.php';
 
 /**
- * POST /deploy is the deploy webhook that runs git pull in
- * local repositories
+ * console_log is a function that prints its arguments into the browser's console
+ * Since it's defined here, it exists globally in the application
  */
-if ($requestMethod === "POST" && $requestURI === "/deploy") {
-    $repoName = $reqBody->repository->name;
-    chdir("../" . $repoToDir[$repoName]);
-    print(shell_exec("git pull"));
+function console_log()
+{
+    $args = func_get_args();
+
+    print("<script>");
+    foreach ($args as $arg) {
+        print("console.log(" . json_encode($arg) . ");");
+    }
+    print("</script>");
 }
 
-/**
- * GET /status is the health check endpoint to see if this
- * server is even working.
- */
-if ($requestMethod === "GET" && $requestURI === "/status") {
-    print("App is alive!");
-}
+$app = new App();
