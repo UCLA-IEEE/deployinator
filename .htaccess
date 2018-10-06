@@ -1,0 +1,11 @@
+RewriteEngine on
+
+# Configures the server to serve static files normally
+RewriteCond %{REQUEST_URI} !^/(.*)(php|htm|html|gif|jpg|gif|png|css|js|txt)$
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+
+# Redirects all other requests to index.php
+RewriteRule ^(.*)$ /index.php/$1 [PT]
