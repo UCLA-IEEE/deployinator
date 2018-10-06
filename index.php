@@ -18,6 +18,7 @@ $reqBody = json_decode($json_str);
  */
 if ($requestMethod === "POST" && $requestURI === "/deploy") {
     $repoName = $reqBody->repository->name;
+    print($repoName);
     chdir("../" . $repoToDir[$repoName]);
     print(shell_exec("git pull"));
 }
