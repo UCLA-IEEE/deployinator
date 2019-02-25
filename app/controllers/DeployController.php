@@ -8,6 +8,7 @@ class DeployController extends Controller
     private $repoToDir = array(
         "ieeebruins.com" => "ieeebruins-production",
         "deployinator" => "deployinator",
+        "gb-family-tree" => "gb-family-tree-prod",
     );
 
 
